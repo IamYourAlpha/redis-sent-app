@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  redis-database:
+    image: "redis:alpine"
+    restart: always
+    ports:
+      - '6379:6379'
+    networks:
+      - my-network 
+
+  web-app:
+    build: .
+    container_name: fast-api-app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code  # ✅ Fixed volume path
+    depends_on:
+      - redis-database
+    networks:
+      - my-network  # ✅ Fixed networks syntax
+
+networks:
+  my-network:
