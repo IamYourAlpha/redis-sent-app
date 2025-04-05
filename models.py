@@ -2,13 +2,13 @@ import json
 import requests
 
 API_URL = "https://api-inference.huggingface.co/models/sentence-transformers/all-MiniLM-L6-v2"
-tokenPath = "./token.txt"
+tokenPath = "./keys/token.txt"
 
-# Read the token (my person token)
+# Read the token (my personal token)
 with open(tokenPath, "r") as f:
     tok = f.read().strip() 
 
-headers = {"Authorization": f"Bearer {tok}"}  # Add "Bearer " prefix
+headers = {"Authorization": f"Bearer {tok}"}  # add "Bearer " prefix
 
 # todo:
 # replace followint with on-device model.
