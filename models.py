@@ -30,8 +30,8 @@ async def predict(request: Request):
     }
     # in header I have the token info, and payload contains the sentence I want to process.
     response = requests.post(API_URL, headers=headers, json=payload)
-    print (response)
     if response.status_code == 200:
+        # return response.json()
         return JSONResponse(content=response.json())
     else:
         error = {"error": response.status_code, "message": response.text}  # Handle errors

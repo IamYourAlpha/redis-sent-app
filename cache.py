@@ -12,10 +12,18 @@ def addToCache(c1, c2, score):
     key = "timestamp_" + str(time.time())
     cache.hset(key, mapping=payload)
 
+def cleanCache():
+    keys = cache.keys("*")
+    # x == ['prefix:key1','prefix:key2'] # True
+    for key in keys:
+        cache.delete(key)
+
 def retrieve():
     queryList = []
     keys = cache.keys("timestamp_*")
     for key in keys:
         query = cache.hgetall(key)
         queryList.append(query)
+        # keyList.append(key)
     return queryList
+# addToCache("intisar", "chowdhury", 10)
