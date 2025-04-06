@@ -1,7 +1,7 @@
 import redis
 import time
 
-cache = redis.Redis(host='redis', port=6379, charset="utf-8", decode_response=True)
+cache = redis.Redis(host='redis-database', port=6379, charset="utf-8", decode_responses=True)
 
 def addToCache(c1, c2, score):
     payload = {

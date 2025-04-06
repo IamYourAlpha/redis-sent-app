@@ -1,0 +1,5 @@
+FROM python:3.10-slim
+WORKDIR /code
+COPY . .
+RUN pip install streamlit requests redis
+CMD ["streamlit", "run", "gui.py", "--server.port=8501", "--server.address=0.0.0.0"]

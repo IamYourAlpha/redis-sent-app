@@ -10,16 +10,30 @@ services:
       - my-network 
 
   web-app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.fastapi
     container_name: fast-api-app
     ports:
       - "8000:8000"
     volumes:
-      - .:/code  # ✅ Fixed volume path
+      - .:/code 
     depends_on:
       - redis-database
     networks:
-      - my-network  # ✅ Fixed networks syntax
+      - my-network
+    
+  gui-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.gui
+    container_name: streamgui-app
+    ports:
+      - "9000:8501"
+    volumes:
+      - .:/code
+    networks:
+      - my-network
 
 networks:
   my-network:
