@@ -20,7 +20,18 @@ jobs:
       - name: Run FastAPI container
         run: |
           docker run -d -p 8000:8000 --name fastapi-container fastapi-app
-          sleep 5  # wait a bit to let it start
+      
+      - name: Wait for FatAPI to be ready.
+        run: |
+          for i in {1..30}; do
+            echo "Waiting for FastAPI to be ready... attempt $i"
+            if curl -s http://localhost:8000/docs > /dev/null; then
+              echo "FastAPI is up!"
+              break
+            fi
+            sleep 1
+          done
+
 
       - name: Install dependencies
         run: |
