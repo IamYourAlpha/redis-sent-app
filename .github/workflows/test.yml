@@ -5,21 +5,8 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  test-my-app:
     runs-on: ubuntu-latest
-
-    services:
-      fastapi:
-        build:
-          context: .
-          dockerfile: Dockerfile.fastapi
-        ports:
-          - 8000:8000
-        options: >-
-          --health-cmd="curl --fail http://localhost:8000/docs || exit 1"
-          --health-interval=5s
-          --health-timeout=3s
-          --health-retries=5
 
     steps:
       - name: Checkout the code
@@ -30,10 +17,22 @@ jobs:
         with:
           python-version: 3.10
 
+      - name: Build FastAPI Docker image
+        run: docker build -f Dockerfile.fastapi -t fastapi-app .
+
+      - name: Run FastAPI container
+        run: |
+          docker run -d -p 8000:8000 --name fastapi-container fastapi-app
+          sleep 5  # wait a bit to let it start
+
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
           pip install pytest
 
-      - name: Run pytest
+      - name: Run tests
         run: pytest tests/
+
+      - name: Stop container
+        if: always()
+        run: docker stop fastapi-container && docker rm fastapi-container
