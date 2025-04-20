@@ -1,0 +1,19 @@
+name Run FastAPI Test
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+  
+  services:
+    fastapi:
+      build:
+        context: .
+        dockerfile: Dockerfile.fastapi
+      ports:
+        - 8000:8000
+    steps:
+      - name: checkout the codes
+      uses: action/checkout@v3
+      - name: set up python
+        uses: actions/setup-python@v4
+    
