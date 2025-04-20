@@ -2,7 +2,7 @@ import requests
 import time
 
 def testEndpoint():
-    time.sleep(3)
+    time.sleep(5)
     payload = {"str1": "I love orange", "str2": "I hate orange"}
     home_ = "http://localhost:8000/predict"
     response = requests.post(home_, json=payload)
@@ -13,6 +13,7 @@ def testEndpoint():
     print (response.json())
 
 def testPredictFailure():
+    time.sleep(5)
     payload = {"str1": "I love orange", "str2": "I hate orange"}
     home_ = "http://localhost:8000/predict"
     response = requests.post(home_, json=payload)
