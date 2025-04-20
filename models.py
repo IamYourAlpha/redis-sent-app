@@ -1,3 +1,4 @@
+import os
 import json
 import requests
 from fastapi import FastAPI, Request
@@ -8,9 +9,11 @@ from fastapi.responses import JSONResponse
 API_URL = "https://api-inference.huggingface.co/models/sentence-transformers/all-MiniLM-L6-v2"
 tokenPath = "./keys/token.txt"
 
+tok  = os.environ.get("HF_TOKEN", "")
 # Read the token (my personal token)
-with open(tokenPath, "r") as f:
-    tok = f.read().strip() 
+if (not tok):
+    with open(tokenPath, "r") as f:
+        tok = f.read().strip() 
 
 headers = {"Authorization": f"Bearer {tok}"}  # add "Bearer " prefix
 
